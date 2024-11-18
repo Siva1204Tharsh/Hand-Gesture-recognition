@@ -12,7 +12,7 @@ print("Loaded model from disk")
 
 def classify(img_file):
     img_name=img_file
-    test_image = image.load_img(img_name, target_size=(256,256))
+    test_image = image.load_img(img_name, target_size=(256,256), color_mode='grayscale')
 
     test_image = image.img_to_array(test_image)
     test_image = np.expand_dims(test_image, axis=0)
@@ -39,3 +39,4 @@ for r, d, f in os.walk(path):
 
 for f in files:
     classify(f)
+    print("\n")
