@@ -52,7 +52,10 @@ val_generator=val_datagen.flow_from_directory('HandGestureDataset/test',
                                               batch_size=8,
                                               classes=['NONE','ONE','TWO','THREE','FOUR','FIVE'],
                                               class_mode='categorical') 
+##########################################################################
 
+
+### 04.Training model
 callback_list=[
     EarlyStopping(monitor='val_loss',patience=10),
     ModelCheckpoint(filepath="model.keras",monitor='val_loss',save_best_only=True,verbose=1)]
@@ -64,8 +67,15 @@ model.fit(train_generator,
                     validation_steps=7,
                     callbacks=callback_list 
          )
-model_json = model.to_json()
-with open("model.json", "w") as json_file:
-    json_file.write(model_json)
-model.save("model.h5")
-print("Saved model to disk")
+
+### 05.Saving model
+import os
+if not os.path.exists("model.json"):
+    model_json = model.to_json()
+    with open("model.json", "w") as json_file:
+       json_file.write(model_json)
+    model.save_weights("model.weights.h5")
+    print("Saved model to disk")
+else:
+    print("Model already exists")
+    
